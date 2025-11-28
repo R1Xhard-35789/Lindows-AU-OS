@@ -63,8 +63,8 @@
 
 *The official Lindows AU ISO (v0.0.1) is hosted securely on Google Cloud Storage.*
 
-1. ***Download ISO (6.2 GB):** `https://demo.spers.online/ubuntu-24.04.3-2025.11.28-desktop-amd64.iso`*  
-2. ***Download MD5 Checksum (for Verification):** `https://demo.spers.online/ubuntu-24.04.3-2025.11.28-desktop-amd64.md5`*
+1. ***Download ISO (6.2 GB):** `https://demo.spers.online/lindows-0.0.1-ubuntu-24.04.3-2025.11.28-desktop-amd64.iso`*  
+2. ***Download MD5 Checksum (for Verification):** `https://demo.spers.online/lindows-0.0.1-ubuntu-24.04.3-2025.11.28-desktop-amd64.md5`*
 
 ### ***Verification Protocol***
 
