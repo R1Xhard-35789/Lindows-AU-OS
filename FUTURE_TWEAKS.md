@@ -43,3 +43,21 @@ The current build relies on the user downloading apps via the store after instal
 * **Automated Builds:** Set up a Continuous Integration (CI) pipeline (e.g., GitHub Actions) to automatically build the ISO whenever changes are merged to `main`. This eliminates the need for manual Cloud VM spinning.  
 * **Live Testing Suite:** Develop a test suite to automatically verify that the `lindows_welcome.py` script runs, the desktop icons are correctly placed, and the "Walled Garden" (`gnome-software`) only shows Flatpaks.
 
+## **IV. Legacy Hardware & Driver Support (Addendum)**
+
+This phase addresses the reality of our target hardware. While the base kernel is excellent, older systems (especially laptops) rely on proprietary or non-free components that require manual installation to function correctly. This is essential for the "Right to Repair" ethos.
+
+### **1\. Wireless and Firmware Reliability**
+
+We must ensure that Wi-Fi works out of the box on machines with notoriously difficult chipsets.
+
+| Component | Goal | Technical Challenge |
+| :---- | :---- | :---- |
+| **Broadcom/Realtek** | Ensure full Wi-Fi functionality on older laptops. | The base ISO often lacks the necessary **non-free firmware** or the `bcmwl-kernel-source` package, which is necessary for these cards to function. The solution requires pre-installing or configuring the system to install these during the build process. |
+| **Media Codecs** | Enable playback of common media files (MP3, H.264, AAC). | Licensing prevents these codecs from being included by default. We must integrate the **`ubuntu-restricted-extras`** package (or similar meta-packages) to guarantee functional media players like VLC upon first boot. |
+
+### **2\. Older Graphics Driver Support**
+
+For users who want to run the machine as a fully capable workstation, we must simplify the path for installing legacy proprietary graphics drivers.
+
+* **NVIDIA Legacy:** Older NVIDIA cards (e.g., those requiring the **340 series** or **390 series** drivers) are dropped from mainline Ubuntu support over time. We need to document and/or pre-stage the necessary older driver packages and header files within the ISO structure, providing a simple, one-click script to install the correct legacy driver without breaking the XFCE desktop environment.
