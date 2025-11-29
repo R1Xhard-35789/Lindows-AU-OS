@@ -80,6 +80,10 @@
 
 ---
 
+### 📝 The Lindows Guarantee (Open Standards)
+
+* **No EULA Required:** This operating system utilizes **Liberation Fonts**, an open-source typeface family metrically compatible with Microsoft's proprietary fonts. This ensures documents look correct without requiring you to agree to a Microsoft license to use your own computer.
+
 ## ***⚖️ Legal & Disclaimer***
 
 ***Lindows AU** is a revival and tribute to the original open-source spirit.*
