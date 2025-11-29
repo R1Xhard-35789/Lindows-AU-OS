@@ -40,6 +40,10 @@
 * ***The Digital Suitcase:** Our proprietary tool allows users to transfer passwords and bookmarks from an existing Windows installation to Lindows via a local USB drive—no cloud syncing required.*  
 * ***Sleeper Build:** While it looks like an appliance, it is a fully capable Ubuntu workstation underneath. The Terminal and advanced tools are hidden but accessible for technicians.*  
 * ***The End of Life Switch:** The `/scripts/donation_mode.sh` script prepares the machine for donation, securely wiping personal data and unlocking the full Workstation environment.*
+* 
+* ### 📝 The Lindows Guarantee (Transparency)
+
+* **EULA Pre-Agreement:** To ensure out-of-the-box functionality, the system setup process agrees to the necessary **Microsoft EULA** for fonts and media files on the user's behalf.
 
 ### ***Included Software (The Essentials)***
 
