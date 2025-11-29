@@ -61,3 +61,25 @@ We must ensure that Wi-Fi works out of the box on machines with notoriously diff
 For users who want to run the machine as a fully capable workstation, we must simplify the path for installing legacy proprietary graphics drivers.
 
 * **NVIDIA Legacy:** Older NVIDIA cards (e.g., those requiring the **340 series** or **390 series** drivers) are dropped from mainline Ubuntu support over time. We need to document and/or pre-stage the necessary older driver packages and header files within the ISO structure, providing a simple, one-click script to install the correct legacy driver without breaking the XFCE desktop environment.
+
+
+
+🗺️ Lindows AU: Future Tweaks & Roadmap
+
+This document outlines architectural improvements and feature additions planned for versions v0.0.2 and beyond.
+
+I. Phase 3: Aesthetic Polish & Authenticity (Next Priority)
+
+This phase focuses on finalizing the visual identity of Lindows AU.
+Feature	Goal	Technical Challenge
+Screensaver Revival	Install and configure xscreensaver to default to 3D Pipes, Maze, and Flying Toasters.	Must create and set the default .xscreensaver config file for all new users.
+Custom Wallpaper	Bake the official "Lindows Bliss Hill" wallpaper into the ISO.	Must be set via the XFCE settings manager (xfconf-query) in /etc/skel to apply to all new users.
+Start Menu Icon	Replace the generic XFCE "mouse" icon with a pixel-perfect Lindows "Start" logo.	Requires modifying the whiskermenu-1.rc configuration.
+Boot/Plymouth Screen	Replace the default Ubuntu logo with a retro Lindows branded progress bar.	Requires creating a custom Plymouth theme and setting it as the boot default.
+System Sounds	Add classic Windows 95/98 sound events (startup chime, shutdown tone) to XFCE.	Requires configuring custom .wav files via the XFCE settings panel.
+
+II. System Disclosure & Compliance
+
+Component	Goal	Status in V0.0.1
+Microsoft EULA	Inform the user of pre-acceptance.	DONE. The welcome script now informs the user that the EULA for Microsoft fonts was accepted during setup.
+Partitioning Automation	Automate safe deletion of Windows and expansion of EXT4 partition during post-install (replacement for remove_windows.sh).	CRITICAL DEFERRED FEATURE. Requires custom Calamares Python module.
