@@ -1,0 +1,93 @@
+# **🎨 Lindows AU: Branding & Design Specifications**
+
+**"Unearthed. Revived. Gold."**
+
+This document defines the visual identity of **Lindows AU**. Our aesthetic is a fusion of **1998 Nostalgia** (Chicago95) and **Australian Resilience** (Green & Gold), designed to make recycled hardware feel "Premium" rather than "Second Hand."
+
+---
+
+## **1\. The Core Palette ("The Golden Age")**
+
+We move away from the standard "Windows Teal" and "Error Red." Our colors represent value, restoration, and national identity.
+
+| Color Name | Hex Code | Usage | Meaning |
+| :---- | :---- | :---- | :---- |
+| **Aussie Gold** | `#FFCD00` | **Primary Brand Color.** Start Button, Active Title Bars, Progress Bars. | Quality, Value, "Good as Gold." |
+| **Outback Green** | `#00843D` | **Secondary Brand Color.** Selection highlights, "Success" states, Glove accents. | Growth, Renewal, Australian Identity. |
+| **Chicago Grey** | `#C0C0C0` | **UI Background.** Standard window backgrounds (Chicago95 default). | Nostalgia, Familiarity, Stability. |
+| **Win98 Blue** | `#000080` | **Legacy Accent.** Inactive selection backgrounds (Historical accuracy). | Muscle Memory anchor. |
+| **Warning Amber** | `#FFBF00` | **Alerts.** Used for the "Driver Assistant" icon. | Caution (softer than Red). |
+
+**🖌️ Implementation Guide**
+
+* **Plymouth (Boot Screen):** Black background. A golden silhouette of the Lindow Man fills up with liquid gold light (Left to Right) as the system loads.  
+* **Active Window:** The title bar gradient should flow from **Win98 Blue** to **Aussie Gold** (or solid Gold with Black text for high contrast).
+
+---
+
+## **2\. The Logos & Iconography**
+
+### **A. The Primary Mascot: "The Golden Roo" 🥊🦘**
+
+* **Concept:** A pixel-art head of a Boxing Kangaroo.  
+* **Style:** 16-bit or 32-bit pixel art (reminiscent of Windows 95 icons).  
+* **Usage:**  
+  * **Start Button:** Replaces the Chicago95 "Start" logo.  
+  * **Favicon:** Website browser tab icon.  
+  * **System Tray:** Update notification icon.
+
+### **B. The Ethos Mark: "The Lindow Man" 🏺**
+
+* **Concept:** A stylized, dignified silhouette of a man rising from the earth/bog.  
+* **Style:** Vector / Stencil. Minimalist.  
+* **Usage:**  
+  * **Installer Splash Screen:** The first thing the user sees.  
+  * **About Screen:** Watermark behind the version number.  
+  * **Wallpapers:** Subtle branding in the corner of the desktop background.
+
+---
+
+## **3\. Typography (The "Redmond" Look)**
+
+We strictly adhere to fonts that mimic the Microsoft Windows 98/2000 era to preserve muscle memory.
+
+| Usage | Font Family | Linux Equivalent | Fallback |
+| :---- | :---- | :---- | :---- |
+| **UI Interface** | MS Sans Serif | **Liberation Sans** (Bold) | Sans Serif |
+| **Documents** | Times New Roman | **Liberation Serif** | Serif |
+| **Terminal/Code** | Courier New | **Liberation Mono** | Monospace |
+
+**Rule:** UI font size should be **10pt or 11pt** (slightly larger than modern defaults) to accommodate senior eyesight.  
+---
+
+## **4\. The "Golden Hour" Wallpaper Theme 🌄**
+
+The default wallpaper is critical. It sets the emotional tone.
+
+* **Concept:** **"Bliss" at Sunset.**  
+* **Description:** The classic rolling green hill and blue sky, but color-graded to reflect the "Golden Hour" (Sunset). The sky is amber/gold, the grass is warm.  
+* **Why:** It feels familiar (Bliss) but implies the "End of the Day" (Legacy Hardware) is actually the most beautiful time. It feels warm and welcoming, not cold and digital.
+
+---
+
+## **5\. Voice & Tone ("Grandma-Friendly")**
+
+All system text, installer messages, and error dialogs must adhere to these rules:
+
+1. **No Jargon:** Never say "Kernel," "Distro," or "Sudo" in a user-facing dialog.  
+   * *Bad:* "Root privileges required to mount filesystem."  
+   * *Good:* "The computer needs your permission to open this folder."  
+2. **Reassuring:** Old computers are scary to seniors. We must be calm.  
+   * *Bad:* "CRITICAL ERROR: DRIVER MISSING."  
+   * *Good:* "We found a part that needs a little help. Click here to fix it."  
+3. **The "Vault" Analogy:** When discussing security or passwords, use the metaphor of a physical Vault or Key.
+
+---
+
+## **6\. Asset Checklist (Phase 2 To-Do)**
+
+* \[ \] **`start_button.png`**: Golden Roo pixel art (approx 24x24 or 32x32).  
+* \[ \] **`wallpaper_golden_bliss.jpg`**: 1920x1080 default background.  
+* \[ \] **`plymouth_theme/`**: Boot animation assets.  
+* \[ \] **`driver_icon.png`**: A medical kit or mechanic's wrench icon for the Driver Assistant.
+
