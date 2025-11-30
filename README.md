@@ -2,7 +2,8 @@
 
 ***"We don't throw away perfectly good computers just because a corporation said so."***
 
----
+---<img width="1024" height="1024" alt="lindows_bliss" src="https://github.com/user-attachments/assets/46c1ae65-2a7c-474e-b021-c74898a7ca10" />---
+
 
 *\[\!WARNING\]*
 
