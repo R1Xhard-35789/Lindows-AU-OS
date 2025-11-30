@@ -123,3 +123,113 @@ xorriso -as mkisofs \
   .
 
 echo "--- ✅ V0.9 COMPLETE: $HOME/$OUTPUT_ISO ---"
+
+
+v0.8 BUILD SCRIPT
+
+#!/bin/bash
+# LINDOWS AU - NUCLEAR FACTORY BUILDER (V1.2 - BRANDED)
+# Changes: Rebrands GRUB menu to "Lindows AU"
+
+set -e
+
+# --- CONFIGURATION ---
+WORK_DIR="$HOME/Lindows_Factory_Final"
+ASSETS_SRC="/home/change4caring/Lindows_Assets"
+ISO_FILENAME="xubuntu-24.04.iso"
+OUTPUT_ISO="Lindows_AU_v0.8.iso"
+
+# --- 1. CLEANUP ---
+echo "--- 🧹 CLEARING FACTORY FLOOR ---"
+sudo umount "$WORK_DIR/staging/sys" 2>/dev/null || true
+sudo umount "$WORK_DIR/staging/proc" 2>/dev/null || true
+sudo umount "$WORK_DIR/staging/dev" 2>/dev/null || true
+sudo umount "$WORK_DIR/mnt" 2>/dev/null || true
+sudo rm -rf "$WORK_DIR"
+mkdir -p "$WORK_DIR/mnt" "$WORK_DIR/extract" "$WORK_DIR/staging"
+
+# --- 2. MOUNT ISO ---
+echo "--- 📦 MOUNTING ISO ---"
+sudo mount -o loop "$HOME/Downloads/$ISO_FILENAME" "$WORK_DIR/mnt"
+
+# --- 3. COPY BASE ISO STRUCTURE ---
+echo "--- 🚚 COPYING ISO BOOT FILES ---"
+rsync -a --exclude=/casper/*.squashfs "$WORK_DIR/mnt/" "$WORK_DIR/extract"
+
+# --- 4. LAYER CAKE EXTRACTION ---
+echo "--- 🍰 STACKING FILESYSTEM LAYERS ---"
+sudo unsquashfs -f -d "$WORK_DIR/staging" "$WORK_DIR/mnt/casper/minimal.squashfs"
+sudo unsquashfs -f -d "$WORK_DIR/staging" "$WORK_DIR/mnt/casper/minimal.standard.squashfs"
+sudo unsquashfs -f -d "$WORK_DIR/staging" "$WORK_DIR/mnt/casper/minimal.standard.live.squashfs"
+sudo umount "$WORK_DIR/mnt"
+
+# --- 5. INJECTION ---
+echo "--- 💉 PREPARING CHROOT ---"
+sudo mkdir -p "$WORK_DIR/staging/dev" "$WORK_DIR/staging/proc" "$WORK_DIR/staging/sys" "$WORK_DIR/staging/etc" "$WORK_DIR/staging/opt/assets" "$WORK_DIR/staging/tmp"
+sudo cp -r "$ASSETS_SRC"/* "$WORK_DIR/staging/opt/assets/"
+sudo chmod -R 777 "$WORK_DIR/staging/opt/assets"
+sudo cp /etc/resolv.conf "$WORK_DIR/staging/etc/"
+sudo mount --bind /dev "$WORK_DIR/staging/dev"
+sudo mount -t proc proc "$WORK_DIR/staging/proc"
+sudo mount -t sysfs sysfs "$WORK_DIR/staging/sys"
+
+# --- 6. EXECUTION ---
+echo "--- ⚙️ RUNNING MASTER INSTALL SCRIPT ---"
+sudo chroot "$WORK_DIR/staging" /bin/bash -c "bash /opt/assets/install_core.sh"
+
+# --- 7. CLEANUP CHROOT ---
+echo "--- 🧼 CLEANING UP ---"
+sudo umount "$WORK_DIR/staging/sys"
+sudo umount "$WORK_DIR/staging/proc"
+sudo umount "$WORK_DIR/staging/dev"
+sudo rm "$WORK_DIR/staging/etc/resolv.conf"
+
+# --- 8. BOOTLOADER PATCHING (BRANDING & FIXES) ---
+echo "--- 🔧 PATCHING GRUB ---"
+CONFIG_DIR="$WORK_DIR/extract/boot/grub"
+
+# A. Fix the "No Medium" Error (Force filesystem name)
+sudo sed -i 's/minimal.standard.live.squashfs/filesystem.squashfs/g' "$CONFIG_DIR/grub.cfg"
+sudo sed -i 's/minimal.standard.squashfs/filesystem.squashfs/g' "$CONFIG_DIR/grub.cfg"
+sudo sed -i 's/minimal.squashfs/filesystem.squashfs/g' "$CONFIG_DIR/grub.cfg"
+
+# B. Fix Hardware Compatibility (Nomodeset)
+sudo sed -i 's/quiet splash/quiet splash nomodeset/g' "$CONFIG_DIR/grub.cfg"
+
+# C. BRANDING (The "Lindows" text)
+# Replaces "Try or Install Xubuntu" with "Try Lindows AU"
+sudo sed -i 's/Try or Install Xubuntu/Try Lindows AU/g' "$CONFIG_DIR/grub.cfg"
+sudo sed -i 's/Xubuntu/Lindows AU/g' "$CONFIG_DIR/grub.cfg"
+
+# --- 9. REPACKAGING ---
+echo "--- 📦 COMPRESSING UNIFIED FILESYSTEM (zstd) ---"
+sudo mksquashfs "$WORK_DIR/staging" "$WORK_DIR/extract/casper/filesystem.squashfs" -comp zstd -Xcompression-level 15 -noappend
+printf $(du -sx --block-size=1 "$WORK_DIR/staging" | cut -f1) > "$WORK_DIR/extract/casper/filesystem.size"
+
+# --- 10. BOOT IMAGE RECOVERY (From V0.7 Lesson) ---
+echo "--- 🔧 RECOVERING BOOT IMAGE ---"
+# We extract the hidden EFI image again to ensure the new build has it
+xorriso -osirrox on -indev "$HOME/Downloads/$ISO_FILENAME" -extract_boot_images "$WORK_DIR/extract/boot/grub"
+EFI_FOUND=$(find "$WORK_DIR/extract/boot/grub" -name "*efi.img*" | head -n 1)
+if [ -z "$EFI_FOUND" ]; then EFI_FOUND=$(find "$WORK_DIR/extract/boot/grub" -size +1M -size -10M -name "*.img" | head -n 1); fi
+mv "$EFI_FOUND" "$WORK_DIR/extract/boot/grub/efi.img"
+
+# --- 11. GENERATE ISO ---
+echo "--- 💿 BUILDING V0.8 ISO ---"
+cd "$WORK_DIR/extract"
+find . -type f -print0 | xargs -0 md5sum | grep -v isolinux/boot.cat | sudo tee md5sum.txt
+
+xorriso -as mkisofs \
+  -r -V "LINDOWS_AU_V0_8" \
+  -J -joliet-long -l \
+  -iso-level 3 \
+  -partition_offset 16 \
+  -b boot/grub/i386-pc/eltorito.img \
+     -no-emul-boot -boot-load-size 4 -boot-info-table --grub2-boot-info \
+  -eltorito-alt-boot \
+  -e boot/grub/efi.img \
+     -no-emul-boot -isohybrid-gpt-basdat \
+  -o "$HOME/$OUTPUT_ISO" \
+  .
+
+echo "--- ✅ DONE: $HOME/$OUTPUT_ISO ---"
