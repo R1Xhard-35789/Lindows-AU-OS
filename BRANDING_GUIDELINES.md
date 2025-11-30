@@ -28,6 +28,7 @@ We move away from the standard "Windows Teal" and "Error Red." Our colors repres
 ## **2\. The Logos & Iconography**
 
 ### **A. The Primary Mascot: "The Golden Roo" 🥊🦘**
+<img width="1023" height="1024" alt="Lindows" src="https://github.com/user-attachments/assets/3039f0b5-a370-4b4a-bd35-f01f284a0ecf" />
 
 * **Concept:** A pixel-art head of a Boxing Kangaroo.  
 * **Style:** 16-bit or 32-bit pixel art (reminiscent of Windows 95 icons).  
