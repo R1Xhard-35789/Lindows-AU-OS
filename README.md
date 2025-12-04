@@ -94,3 +94,24 @@
 
 ***Built with ❤️ and ☕ in Bundaberg, Queensland.** Saving the planet, one Pentium at a time.*
 
+## ***🔮 The Two-Tier Roadmap***
+
+**1. Lindows AU (Classic Edition)**
+
+    Current Version: 1.5
+
+    Mission: Revive 10-year-old "Nuggets."
+
+    Features: Includes proprietary drivers for legacy Broadcom Wi-Fi and Nvidia GPUs.
+
+    Requirement: Secure Boot MUST be Disabled.
+
+**2. Lindows AU (Secure Edition)**
+
+    Status: In Development
+
+    Mission: A privacy-focused alternative for modern laptops.
+
+    Features: Fully signed boot chain (Microsoft > Shim > GRUB > Kernel). Zero unauthorized modifications.
+
+    Requirement: Works with Secure Boot ENABLED. (Note: Will not support legacy hardware requiring patched drivers).
