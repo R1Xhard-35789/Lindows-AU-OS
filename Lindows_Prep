@@ -1,0 +1,82 @@
+Workflow:
+
+    User Action: User downloads PrepareForLindows.exe inside Windows.
+
+    Elevation: The app requests "Run as Administrator" (UAC prompt).
+
+    UI: A simple window appears: "Packing your Suitcase for Lindows..."
+
+    The Extraction (The "Pack"):
+
+        WiFi: Run netsh export.
+
+        Browsers: Script decrypts Chrome/Edge DB and saves a passwords.csv (temporarily).
+
+        BitLocker: Run manage-bde to grab the recovery key.
+
+    The Handoff:
+
+        The tool zips everything into suitcase.zip.
+
+        Option A (Dual Boot): Saves it to the root of C: (unencrypted if possible, or warns user).
+
+        Option B (USB Install): Copies suitcase.zip onto the Lindows USB Installation stick.
+
+4. Security Warning
+
+Since you are extracting passwords and WiFi keys into a transfer file:
+
+    This "Suitcase" is highly sensitive.
+
+    If you save it as suitcase.zip on a USB stick, anyone who finds that stick has Grandma's banking passwords.
+
+    Recommendation: When the .exe runs, ask the user to create a temporary "Transfer Password." Encrypt the suitcase.zip with that password. When Lindows installs, ask for that password one last time to unpack the suitcase.
+
+
+
+
+WIFI 
+
+Command: netsh wlan export profile key=clear folder=c:\suitcase
+
+Result: This dumps XML files for every saved network containing the SSID and the password in plain text. Lindows can easily parse these XMLs and auto-connect on first boot.
+
+
+BROWSER
+
+Bookmarks: easy. These are standard JSON or HTML files stored in %AppData%. You can just copy them.
+
+Passwords: Hard. Chrome/Edge encrypt saved passwords using Windows DPAPI (Data Protection API). This encryption is tied to the current Windows user's login.
+
+    The Issue: If you just copy the Login Data file to Lindows (Linux), you cannot decrypt it because the Linux OS doesn't have the Windows user's encryption key.
+
+    The Solution: Your "Suitcase" .exe must decrypt the passwords while still inside Windows and export them to a portable format (like CSV or a custom encrypted file that Lindows).
+
+
+BITLOCKER
+
+The Barrier: If the drive is BitLocker encrypted, Linux (via dislocker) needs the Recovery Key (the long number), not just the user's PIN.
+
+The Fix: Your tool can run a command like manage-bde -protectors -get C: -Type RecoveryPassword to reveal the numeric recovery key.
+
+Suitcase Action: Save this key into a text file in the Suitcase. When Lindows boots, it can look for this key and auto-mount the old Windows partition.
+
+
+HANDOFF
+
+Tool "zips" everything.
+
+Option A (Dual Boot): Saves it to the root of C: (unencrypted if possible, or warns user).
+
+Option B (USB Install): Copies suitcase.zip onto the Lindows USB Installation stick.
+
+
+Security Warning
+
+Since you are extracting passwords and WiFi keys into a transfer file:
+
+    This "Suitcase" is highly sensitive.
+
+    If you save it as suitcase.zip on a USB stick, anyone who finds that stick has Grandma's passwords.
+
+    Recommendation: When the .exe runs, ask the user to create a temporary "Transfer Password." Encrypt the suitcase.zip with that password. When Lindows installs, ask for that password one last time to unpack the suitcase.
